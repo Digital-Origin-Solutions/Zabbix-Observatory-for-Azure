@@ -37,7 +37,7 @@ namespace ZabbixSend
                 {
                     Response<IReadOnlyList<AddonAzureBackupJobsLogModel>> result = await LogClient.QueryWorkspaceAsync<AddonAzureBackupJobsLogModel>(
                         workspaceId,
-                        String.Format("AddonAzureBackupJobs | extend TargetName = extract(\";([^;]+)$\", 1, BackupItemUniqueId) | summarize LatestBackupTime = max(TimeGenerated) by TargetName | join kind=inner (AddonAzureBackupJobs | extend TargetName = extract(\";([^;]+)$\", 1, BackupItemUniqueId)) on TargetName, $left.LatestBackupTime == $right.TimeGenerated | where TargetName == \"{0}\"", targetName),
+                        String.Format("AddonAzureBackupJobs | extend TargetName = extract(\";([^;]+)$\", 1, BackupItemUniqueId) | summarize LatestBackupTime = max(TimeGenerated) by TargetName | join kind=inner (AddonAzureBackupJobs | extend TargetName = extract(\";([^;]+)$\", 1, BackupItemUniqueId)) on TargetName, $left.LatestBackupTime == $right.TimeGenerated | where TargetName == \"{0}\"", targetName.ToLower()),
                         new QueryTimeRange(TimeSpan.FromDays(1))
                     );
                     return new OkObjectResult(result.Value[0]);
