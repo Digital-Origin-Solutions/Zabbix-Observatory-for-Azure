@@ -1,16 +1,12 @@
 {
   "dependencies": {
-    "storage1": {
-      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Storage/storageAccounts/zabbixsendstorage",
-      "type": "storage.azure",
-      "connectionId": "AzureWebJobsStorage"
+    "secrets1": {
+      "ignored": "true",
+      "type": "secrets.keyVault"
     },
-    "appInsights2": {
-      "secretStore": "AzureAppSettings",
-      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/microsoft.insights/components/ZabbixSend",
-      "type": "appInsights.azure",
-      "connectionId": "APPLICATIONINSIGHTS_CONNECTION_STRING",
-      "dynamicId": null
+    "appInsights1": {
+      "ignored": "true",
+      "type": "appInsights"
     }
   }
 }

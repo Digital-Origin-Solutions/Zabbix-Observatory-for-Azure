@@ -1,6 +1,6 @@
 ﻿namespace ZabbixSend.Models
 {
-    internal class AddonAzureBackupJobsLogEntry
+    internal class AddonAzureBackupJobsLogModel
     {
         public required string JobUniqueId { get; set; }
         public DateTimeOffset? TimeGenerated { get; set; }

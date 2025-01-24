@@ -10,10 +10,11 @@ using Newtonsoft.Json;
 using System.Diagnostics;
 using ZabbixSend.Models;
 using ZabbixSend;
+using Microsoft.Extensions.Configuration;
 
 var host = new HostBuilder()
     .ConfigureFunctionsWebApplication()
-    .ConfigureServices(services =>
+    .ConfigureServices((context, services) =>
     {
         services.AddApplicationInsightsTelemetryWorkerService();
         services.ConfigureFunctionsApplicationInsights();
