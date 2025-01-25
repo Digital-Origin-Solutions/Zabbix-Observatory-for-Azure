@@ -1,7 +1,12 @@
 {
   "dependencies": {
     "appInsights1": {
+      "ignored": "true",
       "type": "appInsights"
+    },
+    "secrets1": {
+      "ignored": "true",
+      "type": "secrets.keyVault"
     }
   }
 }

@@ -54,6 +54,7 @@ namespace ZabbixSend
             }
             catch (Exception ex)
             {
+                // If any error occured while retrieving the Log results, throw a 400 with the
                 StackTrace st = new(ex, true);
                 string Trace = st.ToString();
                 _logger.LogError("{Message} {Trace}", ex.Message, Trace);
