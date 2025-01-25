@@ -32,16 +32,30 @@ namespace ZabbixSend
         {
             try
             {
+                // Get the Workspace ID from the App Settings in Azure.
                 String? workspaceId = System.Environment.GetEnvironmentVariable("WorkspaceId", EnvironmentVariableTarget.Process);
+                // Check if workspaceId is null. Throw a 500 if it is.
                 if (workspaceId is not null)
                 {
+                    // Get the latest backup job for the backup item filtered by the targetName variable. Scoped to 1 day. Bound to the AddanAzureBackupJobsLogModel.
                     Response<IReadOnlyList<AddonAzureBackupJobsLogModel>> result = await LogClient.QueryWorkspaceAsync<AddonAzureBackupJobsLogModel>(
                         workspaceId,
                         String.Format("AddonAzureBackupJobs | extend TargetName = extract(\";([^;]+)$\", 1, BackupItemUniqueId) | summarize LatestBackupTime = max(TimeGenerated) by TargetName | join kind=inner (AddonAzureBackupJobs | extend TargetName = extract(\";([^;]+)$\", 1, BackupItemUniqueId)) on TargetName, $left.LatestBackupTime == $right.TimeGenerated | where TargetName == \"{0}\"", targetName.ToLower()),
                         new QueryTimeRange(TimeSpan.FromDays(1))
                     );
-                    return new OkObjectResult(result.Value[0]);
+                    // Check if the result contained a row for the targetName.
+                    if (result.Value.Count > 0)
+                    {
+                        // Return the single object.
+                        return new OkObjectResult(result.Value[0]);
+                    }
+                    else
+                    {
+                        // Return a 404.
+                        return new NotFoundObjectResult($"No entry for target ( {targetName} ) could be found.");
+                    }
                 }
+                // If the workspace ID was null, throw a 500.
                 return new ObjectResult(new ProblemDetails ()
                 {
                     Status = (int)HttpStatusCode.InternalServerError,
@@ -54,11 +68,19 @@ namespace ZabbixSend
             }
             catch (Exception ex)
             {
-                // If any error occured while retrieving the Log results, throw a 400 with the
+                // If any error occured while retrieving the Log results, throw a 500 with the stack trace as the response body.
                 StackTrace st = new(ex, true);
                 string Trace = st.ToString();
                 _logger.LogError("{Message} {Trace}", ex.Message, Trace);
-                return new BadRequestObjectResult($"{ex.Message} {Trace}");
+                return new ObjectResult(new ProblemDetails()
+                {
+                    Status = (int)HttpStatusCode.InternalServerError,
+                    Title = "Internal Server Error",
+                    Detail = $"{ex.Message} {Trace}"
+                })
+                {
+                    StatusCode = (int)HttpStatusCode.InternalServerError
+                };
             }
         }
     }

@@ -12,13 +12,11 @@ using ZabbixSend.Models;
 using ZabbixSend;
 using Microsoft.Extensions.Configuration;
 
+// Instantiate the HTTP server settings.
+// Will use any methods from any class that are anotated with [Function()].
 var host = new HostBuilder()
     .ConfigureFunctionsWebApplication()
-    .ConfigureServices((context, services) =>
-    {
-        services.AddApplicationInsightsTelemetryWorkerService();
-        services.ConfigureFunctionsApplicationInsights();
-    })
     .Build();
 
+// Start the HTTP server.
 host.Run();
