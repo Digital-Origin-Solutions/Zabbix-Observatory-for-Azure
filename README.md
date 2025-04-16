@@ -1,1 +1,1 @@
-# ZabbixSend
+# Zabbix Observatory for Azure
