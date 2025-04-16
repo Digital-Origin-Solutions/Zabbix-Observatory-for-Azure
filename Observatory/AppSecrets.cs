@@ -1,5 +1,4 @@
 using Azure.Identity;
-using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Functions.Worker;
@@ -8,7 +7,7 @@ using Microsoft.Graph.Models;
 using System.Diagnostics;
 using System.Net;
 
-namespace ZabbixSend
+namespace Observatory
 {
     public class ApplicationSecretEntry
     {

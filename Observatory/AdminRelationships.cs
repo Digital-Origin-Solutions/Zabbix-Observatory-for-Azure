@@ -1,17 +1,13 @@
 using Azure.Identity;
-using Google.Protobuf.WellKnownTypes;
-using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Functions.Worker;
-using Microsoft.Extensions.Logging;
 using Microsoft.Graph;
 using Microsoft.Graph.Models;
 using System.Diagnostics;
 using System.Net;
-using System.Text.Json;
 
-namespace ZabbixSend
+namespace Observatory
 {
     public class AdminRelationshipEntry
     {

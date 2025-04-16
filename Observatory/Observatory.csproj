@@ -7,11 +7,6 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Models\ZabbixResponse.cs.disabled" />
-    <Compile Include="Models\ZabbixSendData.cs.disabled" />
-    <Compile Include="ZabbixRequest.cs.disabled" />
-  </ItemGroup>
-  <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Azure.Identity" Version="1.12.0" />
     <PackageReference Include="Azure.Monitor.Query" Version="1.5.0" />

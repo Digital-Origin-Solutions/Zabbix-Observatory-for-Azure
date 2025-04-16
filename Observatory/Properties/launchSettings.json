@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Observatory": {
+      "commandName": "Project",
+      "commandLineArgs": "--port 7126"
+    }
+  }
+}

@@ -9,17 +9,11 @@ using System.Diagnostics;
 using System.Net;
 using Microsoft.Azure.Functions.Worker.Http;
 
-namespace ZabbixSend
+namespace Observatory
 {
-    public class ZabbixSend
+    public class RecoveryServicesLog
     {
-        private readonly ILogger<ZabbixSend> _logger;
         private LogsQueryClient LogClient = new(new DefaultAzureCredential());
-
-        public ZabbixSend(ILogger<ZabbixSend> logger)
-        {
-            _logger = logger;
-        }
 
         [Function("GetBackupResult")]
         public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Function, "get", Route = "backup_result/{*targetName}")] HttpRequestData req, String targetName)
@@ -65,7 +59,6 @@ namespace ZabbixSend
                 // If any error occured while retrieving the Log results, throw a 500 with the stack trace as the response body.
                 StackTrace st = new(ex, true);
                 string Trace = st.ToString();
-                _logger.LogError("{Message} {Trace}", ex.Message, Trace);
                 return new ObjectResult(new ProblemDetails()
                 {
                     Status = (int)HttpStatusCode.InternalServerError,

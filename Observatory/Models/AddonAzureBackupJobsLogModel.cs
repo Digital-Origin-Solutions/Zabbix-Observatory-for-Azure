@@ -1,4 +1,4 @@
-﻿namespace ZabbixSend.Models
+﻿namespace Observatory.Models
 {
     internal class AddonAzureBackupJobsLogModel
     {
