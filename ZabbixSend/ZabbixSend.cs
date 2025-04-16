@@ -1,17 +1,11 @@
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using ZabbixSend.Models;
 using Azure.Identity;
 using Azure.Monitor.Query;
-using Azure.Monitor.Query.Models;
 using Azure;
 using System.Diagnostics;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
-using static Grpc.Core.Metadata;
 using System.Net;
 using Microsoft.Azure.Functions.Worker.Http;
 
