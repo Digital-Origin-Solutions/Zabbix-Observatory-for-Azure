@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Functions.Worker;
-using Microsoft.Extensions.Logging;
-using ZabbixSend.Models;
+using Observatory.Models;
 using Azure.Identity;
 using Azure.Monitor.Query;
 using Azure;
