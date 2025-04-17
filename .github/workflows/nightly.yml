@@ -8,7 +8,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions: write-all
+    permissions:
+      deployments: write
     steps:
     - uses: actions/checkout@v4
     - name: Setup .NET
@@ -27,7 +28,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: nightly-build
-        path: ./bin/Release
+        path: ./Zabbix-Observatory-for-Azure/Observatory/bin/Release/net8.0
 
     # Optional: Create nightly release
     - name: Create Nightly Release
