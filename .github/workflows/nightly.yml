@@ -38,7 +38,7 @@ jobs:
     #
     - name: Publish for Azure Functions
       run: |
-        dotnet publish ./src/Observatory/Observatory.csproj \
+        dotnet publish ./Observatory/Observatory.csproj \
           --configuration Release \
           --output ./publish \
           --no-restore
