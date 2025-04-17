@@ -50,6 +50,6 @@ jobs:
         with:
           tag_name: nightly-${{ github.run_id }}
           name: Nightly Build – ${{ github.run_id }}
-          prerelease: true
+          prerelease: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
