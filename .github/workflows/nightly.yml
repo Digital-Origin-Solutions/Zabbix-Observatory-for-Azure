@@ -45,7 +45,6 @@ jobs:
  
       # ---- Nightly release -------------------------------------------------
       - name: Create Nightly Release
-        if: github.event_name == 'schedule'
         uses: softprops/action-gh-release@v2
         with:
           tag_name: nightly-${{ github.run_id }}
