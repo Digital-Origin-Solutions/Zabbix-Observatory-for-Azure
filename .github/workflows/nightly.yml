@@ -1,53 +1,55 @@
 name: Nightly Build
-
+ 
 on:
   schedule:
-    - cron: '0 2 * * *' # Runs at 2:00 AM UTC every day
-  workflow_dispatch: # Allows manual trigger
-
+    # 02:00 UTC every day
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+ 
 jobs:
   build:
     runs-on: ubuntu-latest
+ 
     permissions:
-      deployments: write
+      contents: write        # needed for release creation
+ 
+    concurrency:
+      group: nightly-${{ github.workflow }}
+      cancel-in-progress: true
+ 
     steps:
-    - uses: actions/checkout@v4
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: 8.0.x
-    - name: Restore dependencies
-      run: dotnet restore
-    - name: Build
-      run: dotnet build --configuration Release --no-restore
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
-
-    # Optional: Upload artifacts
-    - name: Upload build artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: nightly-build
-        path: ./Zabbix-Observatory-for-Azure/Observatory/bin/Release/net8.0
-
-    # Optional: Create nightly release
-    - name: Create Nightly Release
-      uses: softprops/action-gh-release@v2
-      if: github.event_name == 'schedule'
-      with:
-        name: "Nightly Build - ${{ github.run_id }}"
-        tag_name: nightly-${{ github.run_id }}
-        draft: false
-        prerelease: true
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-    - name: Create release
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        tag: ${{ github.ref_name }}
-      run: |
-        gh release create "$tag" \
-            --repo="$GITHUB_REPOSITORY" \
-            --title="${tag#v}" \
-            --generate-notes
+      - uses: actions/checkout@v4
+ 
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+ 
+      - name: Restore
+        run: dotnet restore
+ 
+      - name: Build (Release)
+        run: dotnet build --configuration Release --no-restore
+ 
+      - name: Test (Release)
+        run: dotnet test --configuration Release --no-build --verbosity normal
+ 
+      # ---- Artifacts -------------------------------------------------------
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: nightly-build
+          path: |
+            **/bin/Release/net8.0/**
+          retention-days: 14
+ 
+      # ---- Nightly release -------------------------------------------------
+      - name: Create Nightly Release
+        if: github.event_name == 'schedule'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: nightly-${{ github.run_id }}
+          name: Nightly Build – ${{ github.run_id }}
+          prerelease: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
