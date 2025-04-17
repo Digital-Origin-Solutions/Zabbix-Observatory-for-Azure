@@ -10,34 +10,33 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      steps:
-      - uses: actions/checkout@v4
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: 8.0.x
-      - name: Restore dependencies
-        run: dotnet restore
-      - name: Build
-        run: dotnet build --no-restore
-      - name: Test
-        run: dotnet test --no-build --verbosity normal
+    - uses: actions/checkout@v4
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
 
-      # Optional: Upload artifacts
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: nightly-build
-          path: ./dist
+    # Optional: Upload artifacts
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: nightly-build
+        path: ./dist
 
-      # Optional: Create nightly release
-      - name: Create Nightly Release
-        uses: softprops/action-gh-release@v2
-        if: github.event_name == 'schedule'
-        with:
-          name: "Nightly Build - ${{ github.run_id }}"
-          tag_name: nightly-${{ github.run_id }}
-          draft: false
-          prerelease: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    # Optional: Create nightly release
+    - name: Create Nightly Release
+      uses: softprops/action-gh-release@v2
+      if: github.event_name == 'schedule'
+      with:
+        name: "Nightly Build - ${{ github.run_id }}"
+        tag_name: nightly-${{ github.run_id }}
+        draft: false
+        prerelease: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
