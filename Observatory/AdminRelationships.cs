@@ -34,15 +34,18 @@ namespace Observatory
 
                     foreach (DelegatedAdminRelationship relationship in relationships)
                     {
-                        if (relationship.Id is not null && relationship.EndDateTime is not null)
+                        if (relationship.Id is not null && relationship.EndDateTime is not null && relationship.Status is not null)
                         {
-                            table.Add(new()
+                            if (relationship.Status == DelegatedAdminRelationshipStatus.Active)
                             {
-                                Id = relationship.Id,
-                                RelationshipDisplayName = relationship.DisplayName is not null ? relationship.DisplayName : "Unnamed",
-                                TenantDisplayName = relationship.Customer?.DisplayName is not null ? relationship.Customer.DisplayName : "Unnamed",
-                                ExpiryDateTime = ((DateTimeOffset)relationship.EndDateTime).DateTime
-                            });
+                                table.Add(new()
+                                {
+                                    Id = relationship.Id,
+                                    RelationshipDisplayName = relationship.DisplayName is not null ? relationship.DisplayName : "Unnamed",
+                                    TenantDisplayName = relationship.Customer?.DisplayName is not null ? relationship.Customer.DisplayName : "Unnamed",
+                                    ExpiryDateTime = ((DateTimeOffset)relationship.EndDateTime).DateTime
+                                });
+                            }
                         }
                     }
                     return new OkObjectResult(table);
