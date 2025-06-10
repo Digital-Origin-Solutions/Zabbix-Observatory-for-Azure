@@ -1,6 +1,6 @@
 # 🌌 Zabbix Observatory for Azure
 
-![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/Digital-Origin-Solutions/Zabbix-Observatory-for-Azure/nightly.yml?branch=master)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/Digital-Origin-Solutions/Zabbix-Observatory-for-Azure/on-push.yml?branch=master)
 ![GitHub Release (latest by date)](https://img.shields.io/github/v/release/Digital-Origin-Solutions/Zabbix-Observatory-for-Azure)
 ![GitHub License](https://img.shields.io/github/license/Digital-Origin-Solutions/Zabbix-Observatory-for-Azure)
 
