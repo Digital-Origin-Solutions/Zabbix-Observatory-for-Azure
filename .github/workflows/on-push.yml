@@ -1,6 +1,7 @@
 name: Nightly Build
  
 on:
+  workflow_dispatch:
   push:
      branches:
         - master
@@ -60,7 +61,7 @@ jobs:
  
     # ---------- Nightly release ----------------------------------------------
     - name: Create Nightly Release
-      uses: softprops/action-gh-release@v2
+      uses: softprops/action-gh-release@v2.0.4
       with:
         tag_name: nightly
         name: Nightly Build – ${{ github.run_id }}
